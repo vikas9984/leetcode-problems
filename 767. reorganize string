@@ -38,3 +38,39 @@ public:
         return res;
     }
 };
+
+
+//using map only-- efficent
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        map<char,int>m;
+        for(auto c: s)m[c]++;
+        char mostFreq;
+        int c=0;
+        for(auto x: m){
+            if(x.second>c){
+                mostFreq=x.first;
+                c=x.second;
+            }
+        }
+        
+        if(c>(s.size()+1)/2)return "";
+        int i=0;
+        while(m[mostFreq]){
+            s[i]=mostFreq;
+            i+=2;
+            m[mostFreq]--;
+        }
+        for(auto x: m){
+            while(x.second>0){
+                if(i>=s.size())i=1;
+                s[i]=x.first;
+                x.second--;
+                i+=2;
+            }
+        }
+        return s;
+    }
+};
